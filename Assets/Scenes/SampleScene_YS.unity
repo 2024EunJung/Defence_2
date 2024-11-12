@@ -707,6 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d60b809464cff1b4ca12e5369c02c21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyedSprite: {fileID: 21300000, guid: 623985981824e844b9a88b8000b65c12, type: 3}
 --- !u!1001 &1389775201189933758
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AttackEnemy : MonoBehaviour
 {
+    private Dictionary<GameObject, int> clickCounts = new Dictionary<GameObject, int>();
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -18,7 +19,25 @@ public class AttackEnemy : MonoBehaviour
                 {
                     Destroy(hit.collider.gameObject);
                 }
+                else if (hit.collider.tag == "enemy_2")
+                {
+                    GameObject enemy = hit.collider.gameObject;
+                    if (!clickCounts.ContainsKey(enemy))
+                    {
+                        clickCounts[enemy] = 0;
+                    }
+
+                    clickCounts[enemy]++;
+
+                    if (clickCounts[enemy] >= 2)
+                    {
+                        Destroy(enemy);
+                        clickCounts.Remove(enemy);
+                    }
+                }
             }
         }
     }
 }
+
+   

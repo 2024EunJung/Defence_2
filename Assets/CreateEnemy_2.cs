@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateEnemy : MonoBehaviour
+public class CreateEnemy_2 : MonoBehaviour
 {
     public GameObject prefabEnemy;
     public Vector2 limitMin;
@@ -13,13 +13,19 @@ public class CreateEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Create());
+        StartCoroutine(StartCreatingAfterDelay(25f)); // 25초 후에 적 생성 시작
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    IEnumerator StartCreatingAfterDelay(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        StartCoroutine(Create());
     }
 
     IEnumerator Create()
@@ -34,7 +40,7 @@ public class CreateEnemy : MonoBehaviour
             Instantiate(prefabEnemy, creatingPoint, Quaternion.identity);
 
 
-            delay = 25.0f / (count + 4);
+            delay = 15.0f / (count + 4);
             yield return new WaitForSeconds(delay);
         }
 

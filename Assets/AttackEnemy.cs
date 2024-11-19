@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class AttackEnemy : MonoBehaviour
 {
+    private Score scoreScript;
+
+    void Start()
+    {
+        scoreScript = FindObjectOfType<Score>();
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -12,11 +19,13 @@ public class AttackEnemy : MonoBehaviour
             Ray2D ray = new Ray2D(wp, Vector2.zero);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-            if (hit.collider != null)
+            if (hit.collider != null && hit.collider.CompareTag("enemy"))
             {
-                if (hit.collider.tag == "enemy")
+                Destroy(hit.collider.gameObject);
+
+                if (scoreScript != null)
                 {
-                    Destroy(hit.collider.gameObject);
+                    scoreScript.IncreaseScore();
                 }
             }
         }

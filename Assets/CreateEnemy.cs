@@ -24,7 +24,8 @@ public class CreateEnemy : MonoBehaviour
 
     IEnumerator Create()
     {
-        while (true) {
+        while (true) 
+        {
 
             count++;
 

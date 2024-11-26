@@ -7,46 +7,46 @@ public class CreatSlime : MonoBehaviour
     public GameObject prefabEnemy;
     public Vector2 limitMin;
     public Vector2 limitMax;
+    private GameObject gameManager;  // 슬라임 레벨을 추적하는 게임 매니저
 
-    private float delay;
-    private int count;
-    private int level = 1; // 현재 레벨 변수, 시작은 레벨 1로 설정
+    private float delay = 7.0f;  // 7초 지연 시간
 
-    // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Create());
+        gameManager = GameObject.Find("GameManager");
+        if (gameManager != null)
+        {
+            StartCoroutine(CreateSlime());
+        }
+        else
+        {
+            Debug.LogError("GameManager object not found!");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
     }
 
-    IEnumerator Create()
+    IEnumerator CreateSlime()
     {
         while (true)
         {
-            // 레벨이 5 이상일 때만 적을 생성
-            if (level >= 5)
+            if (gameManager.GetComponent<Score>().GetLevel() >= 14)  // 레벨이 14 이상인지 확인
             {
-                count++; // 적을 생성할 때마다 카운트 증가
-
                 // y값은 limitMin.y와 limitMax.y 사이에서 랜덤으로 선택
-                float r = Random.Range(limitMin.y, limitMax.y);
+                float randomY = Random.Range(limitMin.y, limitMax.y);
 
                 // 생성 위치 계산 (x는 limitMin.x, y는 랜덤)
-                Vector2 creatingPoint = new Vector2(limitMin.x, r);
+                Vector2 spawnPosition = new Vector2(limitMin.x, randomY);
 
                 // 적 생성
-                Instantiate(prefabEnemy, creatingPoint, Quaternion.identity);
+                Instantiate(prefabEnemy, spawnPosition, Quaternion.identity);
             }
 
-            // 7초 간격으로 생성
-            yield return new WaitForSeconds(7.0f);
+            // 7초 간격으로 슬라임 생성
+            yield return new WaitForSeconds(delay);
         }
-
     }
 
     private void OnDrawGizmos()

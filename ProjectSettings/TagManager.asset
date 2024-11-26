@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - enemy
+  - Slime
+  - enemy_2
   layers:
   - Default
   - TransparentFX
@@ -50,4 +52,7 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 2295512693
+    locked: 0
+  - name: Slime
+    uniqueID: 2161698645
     locked: 0

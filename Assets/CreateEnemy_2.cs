@@ -2,41 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateEnemy : MonoBehaviour
+public class CreateEnemy_2 : MonoBehaviour
 {
     public GameObject prefabEnemy;
     public Vector2 limitMin;
     public Vector2 limitMax;
-    public Score scoreScript;  // Score 스크립트를 참조
 
     private float delay;
-    private int level;
+    private int count;
     // Start is called before the first frame update
     void Start()
     {
-        // Score 스크립트를 자동으로 찾기
-        if (scoreScript != null)
-        {
-        }
-        else
-        {
-            scoreScript = FindObjectOfType<Score>();
-        }
-
-        StartCoroutine(Create());
+        StartCoroutine(StartCreatingAfterDelay(30.0f)); // 30초 후에 적 생성 시작
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    IEnumerator StartCreatingAfterDelay(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        StartCoroutine(Create());
     }
 
     IEnumerator Create()
     {
-        while (true) 
+        while (true)
         {
 
+            count++;
 
             float r = Random.Range(limitMin.y, limitMax.y);
             Vector2 creatingPoint = new Vector2(limitMin.x, r);
@@ -44,12 +41,7 @@ public class CreateEnemy : MonoBehaviour
             Instantiate(prefabEnemy, creatingPoint, Quaternion.identity);
 
 
-            if (scoreScript != null)
-            {
-                int currentLevel = scoreScript.GetLevel();
-                delay = 2.0f / (0.5f * currentLevel); // 레벨에 따라 지연 시간 완만하게 감소
-            }
-
+            delay = 30.0f / (count + 4);
             yield return new WaitForSeconds(delay);
         }
 
